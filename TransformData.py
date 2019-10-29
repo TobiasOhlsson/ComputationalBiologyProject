@@ -1,3 +1,5 @@
+from random import shuffle
+
 from keras_preprocessing.sequence import pad_sequences
 
 k = 0
@@ -12,7 +14,7 @@ def set_k_and_stride(set_k, set_stride):
 
 
 def transform_data(data, max_length):
-    # data = shuffle(data)
+    shuffle(data)
     x_train_list = list(map(seq_to_kmer, [item[0] for item in data]))
     x_train_padded = pad_sequences(x_train_list, maxlen=max_length, padding='post')
     y_train = [float(item[1]) for item in data]
