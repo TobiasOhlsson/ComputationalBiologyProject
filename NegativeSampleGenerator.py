@@ -2,18 +2,7 @@
 import random
 import csv
 
-set = 8
-positive_samples = []
-negative_samples = []
-filtered = True
-
-datasets = ['CTCF1', 'REST', 'PHF8', 'BCL3', 'ATF3', 'NR3C1', 'SIX5', 'RFX5', 'RNF2']
-dataset = datasets[set]
-positive_file_name = 'samples/' + dataset + '_positive_samples.csv'
-negative_file_name = 'samples/' + dataset + '_negative_samples.csv'
-if filtered:
-    positive_file_name = 'filtered_samples/' + dataset + '_filtered_positive_samples.csv'
-    negative_file_name = 'filtered_samples/' + dataset + '_filtered_negative_samples.csv'
+datasets = ['REST', 'PHF8', 'BCL3', 'ATF3', 'SIX5', 'NR3C1', 'RFX5', 'RNF2', 'CTCF1']
 
 
 def create_negative_sample(positive_sample):
@@ -39,12 +28,29 @@ def create_negative_sample(positive_sample):
     return negative_sample
 
 
-with open(negative_file_name, 'w', newline='') as writeFile:
-    writer = csv.writer(writeFile)
-    with open(positive_file_name, 'r') as readFile:
-        reader = csv.reader(readFile)
-        for row in reader:
-            ns = create_negative_sample(row[0].strip())
-            #negative_samples.append([create_negative_sample(d), '0'])
-            writer.writerow([ns, 0])
-writeFile.close()
+def create_neg_csv(s, filtered):
+    positive_samples = []
+    negative_samples = []
+
+    dataset = datasets[s]
+    positive_file_name = 'samples/' + dataset + '_positive_samples.csv'
+    negative_file_name = 'samples/' + dataset + '_negative_samples.csv'
+    if filtered:
+        positive_file_name = 'filtered_samples/' + dataset + '_filtered_positive_samples.csv'
+        negative_file_name = 'filtered_samples/' + dataset + '_filtered_negative_samples.csv'
+    with open(negative_file_name, 'w', newline='') as writeFile:
+        writer = csv.writer(writeFile)
+        with open(positive_file_name, 'r') as readFile:
+            reader = csv.reader(readFile)
+            for row in reader:
+                ns = create_negative_sample(row[0].strip())
+                # negative_samples.append([create_negative_sample(d), '0'])
+                writer.writerow([ns, 0])
+    writeFile.close()
+
+
+for s in range(len(datasets)):
+    create_neg_csv(s, True)
+
+
+

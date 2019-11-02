@@ -13,8 +13,9 @@ def set_k_and_stride(set_k, set_stride):
     stride = set_stride
 
 
-def transform_data(data, max_length):
-    shuffle(data)
+def transform_data(data, max_length, mix=True):
+    if mix:
+        shuffle(data)
     x_train_list = list(map(seq_to_kmer, [item[0] for item in data]))
     x_train_padded = pad_sequences(x_train_list, maxlen=max_length, padding='post')
     y_train = [float(item[1]) for item in data]

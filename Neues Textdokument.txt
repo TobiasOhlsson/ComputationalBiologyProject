@@ -1,0 +1,1 @@
+pscp -i C:\Users\Tobias\Desktop\Uni\Auslandssemester\Kurse\Computational Biology\bioProject.ppk C:\Users\Tobias\Desktop\Uni\Auslandssemester\Kurse\Computational Biology\Research Project ec2-user@public_dns:/home/ec2-user/Sample_file.txt
